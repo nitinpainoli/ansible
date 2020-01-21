@@ -1,0 +1,47 @@
+---
+
+- hosts: all
+
+    
+  tasks:
+  - name: Install nginx
+    apt: 
+      name: nginx
+      state: latest
+      # with_items:
+      # - nginx
+    when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+  - name: add repo
+    yum:
+      name: epel-release
+      state: latest
+      # with_items:
+      # - nginx
+    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+
+
+  - name: Install nginx
+    yum: 
+      name: nginx
+      state: latest
+      # with_items:
+      # - nginx
+    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+  - name: restart nginx
+    service: 
+      name: nginx
+      state: started 
+      enabled: yes
+    when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+  - name: restart nginx
+    service: 
+      name: nginx 
+      state: started 
+      enabled: yes
+    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+          
